@@ -3,22 +3,15 @@ package home.eduard.calendarappandroid;
 import android.content.ContentProvider;
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
 import android.text.TextUtils;
-
 import static android.provider.BaseColumns._ID;
 import static home.eduard.calendarappandroid.Constants.TABLE_NAME;
-import static home.eduard.calendarappandroid.Constants.TIME;
-import static home.eduard.calendarappandroid.Constants.TITLE;
 import static home.eduard.calendarappandroid.Constants.AUTHORITY;
 import static home.eduard.calendarappandroid.Constants.CONTENT_URI;
-
-
 
 public class EventsProvider extends ContentProvider {
     private static final int EVENTS = 1;
@@ -34,20 +27,16 @@ public class EventsProvider extends ContentProvider {
 
     private EventsData events;
     private UriMatcher uriMatcher;
-    // ...
-
 
 
     @Override
     public boolean onCreate() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-        uriMatcher.addURI(AUTHORITY, "events", EVENTS);
-        uriMatcher.addURI(AUTHORITY, "events/#", EVENTS_ID);
+        uriMatcher.addURI(AUTHORITY, "appointmentt", EVENTS);
+        uriMatcher.addURI(AUTHORITY, "appointmentt/#", EVENTS_ID);
         events = new EventsData(getContext());
         return true;
     }
-
-
 
     @Override
     public Cursor query(Uri uri, String[] projection,
@@ -69,8 +58,6 @@ public class EventsProvider extends ContentProvider {
         return cursor;
     }
 
-
-
     @Override
     public String getType(Uri uri) {
         switch (uriMatcher.match(uri)) {
@@ -82,8 +69,6 @@ public class EventsProvider extends ContentProvider {
                 throw new IllegalArgumentException("Unknown URI " + uri);
         }
     }
-
-
 
     @Override
     public Uri insert(Uri uri, ContentValues values) {
@@ -102,7 +87,6 @@ public class EventsProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(newUri, null);
         return newUri;
     }
-
 
 
     @Override
@@ -129,7 +113,6 @@ public class EventsProvider extends ContentProvider {
     }
 
 
-
     @Override
     public int update(Uri uri, ContentValues values,
                       String selection, String[] selectionArgs) {
@@ -153,7 +136,6 @@ public class EventsProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
-
 
 
     /** Append an id test to a SQL selection expression */

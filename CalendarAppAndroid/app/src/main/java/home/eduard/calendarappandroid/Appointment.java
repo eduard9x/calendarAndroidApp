@@ -6,26 +6,21 @@ import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import static android.provider.BaseColumns._ID;
 import static home.eduard.calendarappandroid.Constants.TIME;
 import static home.eduard.calendarappandroid.Constants.TITLE;
-import static home.eduard.calendarappandroid.Constants.TABLE_NAME;
 import static home.eduard.calendarappandroid.Constants.CONTENT_URI;
-
-
+import static home.eduard.calendarappandroid.Constants.DETAILS;
 
 
 public class Appointment extends ListActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    private static String[] FROM = { _ID, TIME, TITLE, };
-    private static int[] TO = { R.id.rowid, R.id.time, R.id.title, };
+    private static String[] FROM = { _ID, TIME, TITLE, DETAILS};
+    private static int[] TO = { R.id.rowid, R.id.time, R.id.title, R.id.details};
     private static String ORDER_BY = TIME + " DESC";
 
     // The loader's unique id (within this activity)
@@ -62,6 +57,7 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         ContentValues values = new ContentValues();
         values.put(TIME, System.currentTimeMillis());
         values.put(TITLE, string);
+        values.put(DETAILS, "I will have to meet with MR.Wood to discuss some business plans. I will need to give him some moneey");
         getContentResolver().insert(CONTENT_URI, values);
     }
 

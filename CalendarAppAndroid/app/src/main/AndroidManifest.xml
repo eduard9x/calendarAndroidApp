@@ -24,6 +24,11 @@
         <activity
             android:name=".Appointment"
             android:label="Appointment"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:windowSoftInputMode="stateVisible|adjustResize"
+            android:name=".ViewEditAppointment"
+            android:label="Appointment"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

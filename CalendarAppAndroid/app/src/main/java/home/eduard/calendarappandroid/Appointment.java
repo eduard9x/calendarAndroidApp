@@ -47,7 +47,11 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_ID, null, this);
 
-        addEvent("Hello, Android!");
+
+
+
+
+//        addEvent("Hello, Android!");
     }
 
 
@@ -57,7 +61,7 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         ContentValues values = new ContentValues();
         values.put(TIME, System.currentTimeMillis());
         values.put(TITLE, string);
-        values.put(DETAILS, "I will have to meet with MR.Wood to discuss some business plans. I will need to give him some moneey");
+        values.put(DETAILS, "I will have to meet with MR.Wood to discuss some business plans. I will need to give him some moneey. Looots and loooots of monaaeeyyy.");
         getContentResolver().insert(CONTENT_URI, values);
     }
 

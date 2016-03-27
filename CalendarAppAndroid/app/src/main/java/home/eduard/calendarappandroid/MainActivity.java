@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = Integer.toString(yearToSet) + " " + Integer.toString(monthToSet) + " " + Integer.toString(dayToSet);
+                String date = Integer.toString(dayToSet) + " " + Integer.toString(monthToSet) + " " + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
                 createIntent(date);
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void createIntent(String doNext) {
-        Intent whatToDoNext = new Intent(this, Appointment.class);
+        Intent whatToDoNext = new Intent(this, ViewEditAppointment.class);
         whatToDoNext.putExtra("DoNext", doNext);
         this.startActivity(whatToDoNext);
     }

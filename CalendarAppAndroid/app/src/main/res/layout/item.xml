@@ -29,7 +29,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textStyle="italic"
+        android:textStyle="bold"
         android:singleLine="true"
         android:layout_toRightOf="@id/timecolon" />
     <TextView
@@ -37,7 +37,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:ellipsize="end"
-        android:maxLines="3"
         android:textStyle="italic"
         android:layout_below="@id/rowid" />
 </RelativeLayout>

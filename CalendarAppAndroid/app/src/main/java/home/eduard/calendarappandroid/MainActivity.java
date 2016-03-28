@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String date = Integer.toString(dayToSet) + " " + Integer.toString(monthToSet) + " " + Integer.toString(yearToSet);
+                String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
                 createIntent(date);

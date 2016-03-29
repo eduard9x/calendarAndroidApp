@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         setTodaysDate();
 
         Button myButton = (Button) findViewById(R.id.button);
-//        final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);
+        final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);
 
         myButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,17 +55,17 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-//        //region Saving the selected date
-//        myCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
-//
-//            @Override
-//            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
-//                yearToSet = year;
-//                monthToSet = month;
-//                dayToSet = dayOfMonth;
-//            }
-//        });
-//        //endregion
+        //region Saving the selected date
+        myCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth) {
+                yearToSet = year;
+                monthToSet = month;
+                dayToSet = dayOfMonth;
+            }
+        });
+        //endregion
     }
 
 

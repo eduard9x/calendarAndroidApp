@@ -3,6 +3,7 @@ package home.eduard.calendarappandroid;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,7 +25,6 @@ public class ViewEditAppointment extends Activity {
         final String day, month, year;
         final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
-
         final EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
         final EditText timeEditText = (EditText) findViewById(R.id.timeEditText);
         final EditText detailsEditText = (EditText) findViewById(R.id.detailsEditText);
@@ -39,7 +39,7 @@ public class ViewEditAppointment extends Activity {
         year = date[2];
 
         TextView dateLabel = (TextView) findViewById(R.id.dateLabel);
-//        dateLabel.setText(day + " " + Months[Integer.parseInt(month)] + " " + year);
+        dateLabel.setText(day + " " + Months[Integer.parseInt(month)] + " " + year);
 
         Button SaveButton = (Button) findViewById(R.id.saveButton);
 
@@ -88,19 +88,10 @@ public class ViewEditAppointment extends Activity {
                     errorLabel.setText("Please enter a valid "+ getResources().getString(R.string.timeLabel));
                 } else {
                     thisActivity.finish();
-                    String date = day + ";;;" + month + ";;;" + year;
-//                    createIntent(date);
                 }
             }
         });
 
-
-    }
-
-    void createIntent(String doNext) {
-        Intent whatToDoNext = new Intent(this, ViewEditAppointment.class);
-        whatToDoNext.putExtra("DoNext", doNext);
-        this.startActivity(whatToDoNext);
     }
 
     public void hideKeyboard(View view) {

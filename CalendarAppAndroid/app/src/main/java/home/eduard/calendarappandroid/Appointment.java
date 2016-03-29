@@ -6,10 +6,14 @@ import android.content.ContentValues;
 import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-
 import static android.provider.BaseColumns._ID;
 import static home.eduard.calendarappandroid.Constants.TIME;
 import static home.eduard.calendarappandroid.Constants.TITLE;
@@ -47,11 +51,24 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         LoaderManager lm = getLoaderManager();
         lm.initLoader(LOADER_ID, null, this);
 
+        ListView lv = (ListView) findViewById(android.R.id.list);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Log.v(" ITEM ", " TO BE OPENED/DELETED " + " " + id);
 
+                deleteEvent(CONTENT_URI, "_ID=?", new String[]{Long.toString(id)});
+            }
+        });
 
+        Button newButton = (Button) findViewById(R.id.button2);
+        newButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addEvent("Hello, Android!");
+            }
+        });
 
-
-//        addEvent("Hello, Android!");
     }
 
 
@@ -63,6 +80,11 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         values.put(TITLE, string);
         values.put(DETAILS, "I will have to meet with MR.Wood to discuss some business plans. I will need to give him some moneey. Looots and loooots of monaaeeyyy.");
         getContentResolver().insert(CONTENT_URI, values);
+    }
+
+    private void deleteEvent(Uri uri, String selection, String[] selectionArgs) {
+        getContentResolver().delete(uri, selection, selectionArgs);
+
     }
 
     @Override

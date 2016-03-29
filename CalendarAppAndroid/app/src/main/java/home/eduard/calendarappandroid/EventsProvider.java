@@ -28,7 +28,6 @@ public class EventsProvider extends ContentProvider {
     private EventsData events;
     private UriMatcher uriMatcher;
 
-
     @Override
     public boolean onCreate() {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
@@ -88,7 +87,6 @@ public class EventsProvider extends ContentProvider {
         return newUri;
     }
 
-
     @Override
     public int delete(Uri uri, String selection,
                       String[] selectionArgs) {
@@ -111,7 +109,6 @@ public class EventsProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri, null);
         return count;
     }
-
 
     @Override
     public int update(Uri uri, ContentValues values,
@@ -137,7 +134,6 @@ public class EventsProvider extends ContentProvider {
         return count;
     }
 
-
     /** Append an id test to a SQL selection expression */
     private String appendRowId(String selection, long id) {
         return _ID + "=" + id
@@ -145,6 +141,5 @@ public class EventsProvider extends ContentProvider {
                 ? " AND (" + selection + ')'
                 : "");
     }
-
 
 }

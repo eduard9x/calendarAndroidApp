@@ -1,13 +1,9 @@
 package home.eduard.calendarappandroid;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -73,19 +69,39 @@ public class ViewEditAppointment extends Activity {
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Log.v("Save button: >>> ", " clicked ");
 
                 hideKeyboard(view);
 
                 String title = titleEditText.getText().toString();
                 String time = timeEditText.getText().toString();
                 String details = detailsEditText.getText().toString();
+                int hours = -1, minutes = -1;
+                boolean timeValid = false;
 
-                Log.v("Save button: >>> ", " clicked ");
+                try {
+                    String[] validator = time.split(":");
+
+                    if (validator.length != 2)
+                        throw new Exception("Please input both hours and minutes.");
+                    else {
+                        hours = Integer.parseInt(validator[0]);
+                        minutes = Integer.parseInt(validator[1]);
+                    }
+
+                    if (hours >= 0 && minutes >= 0)
+                        if (hours <= 23 && minutes <= 59)
+                            timeValid = true;
+
+                } catch (Exception ex) {
+                    Log.v("<<< Exception time: ", ex.toString());
+                }
+
 
                 if (title.equals("")) {
-                    errorLabel.setText("Please enter a valid "+ getResources().getString(R.string.titleLabel));
-                } else if (time.equals("")) {
-                    errorLabel.setText("Please enter a valid "+ getResources().getString(R.string.timeLabel));
+                    errorLabel.setText("Please enter a valid " + getResources().getString(R.string.titleLabel));
+                } else if (!timeValid) {
+                    errorLabel.setText("Please enter a valid " + getResources().getString(R.string.timeLabel));
                 } else {
                     thisActivity.finish();
                 }
@@ -95,7 +111,7 @@ public class ViewEditAppointment extends Activity {
     }
 
     public void hideKeyboard(View view) {
-        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

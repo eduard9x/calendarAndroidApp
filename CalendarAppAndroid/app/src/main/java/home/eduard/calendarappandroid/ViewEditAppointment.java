@@ -52,6 +52,24 @@ public class ViewEditAppointment extends Activity {
             }
         });
 
+        detailsEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
+        timeEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
+
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,7 +89,7 @@ public class ViewEditAppointment extends Activity {
                 } else {
                     thisActivity.finish();
                     String date = day + ";;;" + month + ";;;" + year;
-                    createIntent(date);
+//                    createIntent(date);
                 }
             }
         });

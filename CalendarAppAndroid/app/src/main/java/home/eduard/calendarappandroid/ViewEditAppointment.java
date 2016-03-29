@@ -39,18 +39,24 @@ public class ViewEditAppointment extends Activity {
         year = date[2];
 
         TextView dateLabel = (TextView) findViewById(R.id.dateLabel);
-        dateLabel.setText(day + " " + Months[Integer.parseInt(month)] + " " + year);
+//        dateLabel.setText(day + " " + Months[Integer.parseInt(month)] + " " + year);
 
         Button SaveButton = (Button) findViewById(R.id.saveButton);
 
-        SaveButton.setFocusable(true);
-        SaveButton.setFocusableInTouchMode(true);///add this line
-        SaveButton.requestFocus();
-
+        titleEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    hideKeyboard(v);
+                }
+            }
+        });
 
         SaveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                hideKeyboard(view);
 
                 String title = titleEditText.getText().toString();
                 String time = timeEditText.getText().toString();
@@ -59,14 +65,14 @@ public class ViewEditAppointment extends Activity {
                 Log.v("Save button: >>> ", " clicked ");
 
                 if (title.equals("")) {
-                    errorLabel.setText("Please enter a valid title.");
+                    errorLabel.setText("Please enter a valid "+ getResources().getString(R.string.titleLabel));
                 } else if (time.equals("")) {
-                    errorLabel.setText("Please enter a valid time.");
+                    errorLabel.setText("Please enter a valid "+ getResources().getString(R.string.timeLabel));
                 } else {
                     thisActivity.finish();
+                    String date = day + ";;;" + month + ";;;" + year;
+                    createIntent(date);
                 }
-                String date = day + ";;;" + month + ";;;" + year;
-//                createIntent(date);
             }
         });
 
@@ -77,5 +83,10 @@ public class ViewEditAppointment extends Activity {
         Intent whatToDoNext = new Intent(this, ViewEditAppointment.class);
         whatToDoNext.putExtra("DoNext", doNext);
         this.startActivity(whatToDoNext);
+    }
+
+    public void hideKeyboard(View view) {
+        InputMethodManager inputMethodManager =(InputMethodManager)getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 }

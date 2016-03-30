@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void createIntent(String doNext) {
-        Intent whatToDoNext = new Intent(this, AndroidSQLite.class);
+        Intent whatToDoNext = new Intent(this, Appointment.class);
         whatToDoNext.putExtra("DoNext", doNext);
         this.startActivity(whatToDoNext);
     }

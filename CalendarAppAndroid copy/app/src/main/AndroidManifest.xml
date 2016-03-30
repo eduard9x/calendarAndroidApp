@@ -29,10 +29,6 @@
             android:name=".ViewEditAppointment"
             android:label="Appointment"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".AndroidSQLite"
-            android:label="SQLite"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 

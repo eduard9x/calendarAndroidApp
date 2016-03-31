@@ -26,11 +26,8 @@ public class AndroidSQLite extends Activity {
     SimpleCursorAdapter cursorAdapter;
     Cursor cursor;
 
-    Activity thisOne = this;
+    Activity thisActivity = this;
 
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +48,7 @@ public class AndroidSQLite extends Activity {
         String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT1, SQLiteAdapter.KEY_CONTENT2};
         int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
         cursorAdapter =
-                new SimpleCursorAdapter(thisOne, R.layout.row, cursor, from, to, 0);
+                new SimpleCursorAdapter(thisActivity, R.layout.row, cursor, from, to, 0);
         listContent.setAdapter(cursorAdapter);
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
@@ -70,7 +67,7 @@ public class AndroidSQLite extends Activity {
             String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT1, SQLiteAdapter.KEY_CONTENT2};
             int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
             cursorAdapter =
-                    new SimpleCursorAdapter(thisOne, R.layout.row, cursor, from, to, 0);
+                    new SimpleCursorAdapter(thisActivity, R.layout.row, cursor, from, to, 0);
             listContent.setAdapter(cursorAdapter);
             updateList();
         }
@@ -82,7 +79,6 @@ public class AndroidSQLite extends Activity {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             String data1 = inputContent1.getText().toString();
             String data2 = inputContent2.getText().toString();
             String data3 = "1bla1";
@@ -99,7 +95,6 @@ public class AndroidSQLite extends Activity {
 
         @Override
         public void onClick(View arg0) {
-            // TODO Auto-generated method stub
             mySQLiteAdapter.deleteAll();
             updateList();
         }

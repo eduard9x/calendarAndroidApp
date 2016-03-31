@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,16 +40,28 @@ public class MainActivity extends AppCompatActivity {
         //save the today's date first
         setTodaysDate();
 
-        Button myButton = (Button) findViewById(R.id.button);
+        Button newButton = (Button) findViewById(R.id.newButton);
+        Button deleteButton = (Button) findViewById(R.id.deleteButton);
+
         final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);
 
-        myButton.setOnClickListener(new View.OnClickListener() {
+        newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
-                createIntent(date);
+                createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+            }
+        });
+
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
+                Log.v("new appt straight", date);
+
+                createIntent(date, "home.eduard.calendarappandroid.AndroidSQLite");
             }
         });
 
@@ -68,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void setTodaysDate(){
+    public void setTodaysDate() {
         GregorianCalendar cal = new GregorianCalendar();
         yearToSet = cal.get(Calendar.YEAR);
         monthToSet = cal.get(Calendar.MONTH);
@@ -98,9 +110,14 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    void createIntent(String doNext) {
-        Intent whatToDoNext = new Intent(this, AndroidSQLite.class);
-        whatToDoNext.putExtra("DoNext", doNext);
-        this.startActivity(whatToDoNext);
+
+    void createIntent(String doNext, String className) {
+        try {
+            Intent whatToDoNext = new Intent(this, Class.forName(className));
+            whatToDoNext.putExtra("DoNext", doNext);
+            this.startActivity(whatToDoNext);
+        } catch (Exception ex) {
+            Log.v("Class error", ex.toString());
+        }
     }
 }

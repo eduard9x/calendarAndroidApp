@@ -51,7 +51,7 @@ public class AndroidSQLite extends Activity {
         String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT1, SQLiteAdapter.KEY_CONTENT2};
         int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
         cursorAdapter =
-                new SimpleCursorAdapter(thisOne, R.layout.row, cursor, from, to);
+                new SimpleCursorAdapter(thisOne, R.layout.row, cursor, from, to, 0);
         listContent.setAdapter(cursorAdapter);
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
@@ -112,7 +112,6 @@ public class AndroidSQLite extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,
                                 long id) {
-            // TODO Auto-generated method stub
 
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
             final int item_id = cursor.getInt(cursor.getColumnIndex(SQLiteAdapter.KEY_ID));
@@ -172,14 +171,18 @@ public class AndroidSQLite extends Activity {
 
     @Override
     protected void onDestroy() {
-        // TODO Auto-generated method stub
         super.onDestroy();
         mySQLiteAdapter.close();
     }
 
 
     private void updateList() {
-        cursor.requery();
+        cursor = mySQLiteAdapter.resetCursor();
+        cursorAdapter.swapCursor(cursor);
     }
+
+
+
+
 
 }

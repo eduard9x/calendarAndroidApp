@@ -108,4 +108,6 @@ public class Appointment extends ListActivity implements LoaderManager.LoaderCal
         // The loader's data is unavailable
         mAdapter.swapCursor(null);
     }
+
+
 }

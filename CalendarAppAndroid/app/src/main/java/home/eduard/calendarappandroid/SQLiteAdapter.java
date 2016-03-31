@@ -79,6 +79,13 @@ public class SQLiteAdapter {
         return cursor;
     }
 
+    public Cursor resetCursor() {
+        Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, null,
+                null, null, null, null, null);
+
+        return cursor;
+    }
+
     public Cursor queueFew(int i) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,

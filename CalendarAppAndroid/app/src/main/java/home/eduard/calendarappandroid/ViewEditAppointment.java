@@ -103,6 +103,7 @@ public class ViewEditAppointment extends Activity {
                 } else if (!timeValid) {
                     errorLabel.setText("Please enter a valid " + getResources().getString(R.string.timeLabel));
                 } else {
+                    //todo add it to db
                     thisActivity.finish();
                 }
             }

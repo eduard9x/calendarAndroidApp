@@ -42,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button newButton = (Button) findViewById(R.id.newButton);
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
+        Button searchButton = (Button) findViewById(R.id.searchButton);
+
 
         final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);
 
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        deleteButton.setOnClickListener(new View.OnClickListener() {
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
@@ -65,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
+                Log.v("new appt straight", date);
+
+                createIntent(date, "home.eduard.calendarappandroid.AndroidSQLite");
+            }
+        });
 
         //region Saving the selected date
         myCalendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {

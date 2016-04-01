@@ -103,13 +103,11 @@ public class SQLiteAdapter {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            // TODO Auto-generated method stub
             db.execSQL(SCRIPT_CREATE_DATABASE);
         }
 
         @Override
         public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-            // TODO Auto-generated method stub
 
         }
 

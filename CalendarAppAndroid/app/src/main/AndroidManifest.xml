@@ -26,6 +26,10 @@
             android:name=".AndroidSQLite"
             android:label="SQLite"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Search"
+            android:label="Search"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 

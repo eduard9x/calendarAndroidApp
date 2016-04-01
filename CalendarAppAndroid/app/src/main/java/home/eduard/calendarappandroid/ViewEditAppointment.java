@@ -12,15 +12,16 @@ import android.widget.TextView;
 public class ViewEditAppointment extends Activity {
 
     private SQLiteAdapter mySQLiteAdapter;
-    private String day, month, year;
+    private String day, month, year, title, time, details, _id;
+    private boolean update;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_appointment);
 
+        update=false;
         mySQLiteAdapter = new SQLiteAdapter(this);
-        mySQLiteAdapter.openToWrite();
 
         final Activity thisActivity = this;
 
@@ -38,6 +39,21 @@ public class ViewEditAppointment extends Activity {
         day = date[0];
         month = date[1];
         year = date[2];
+
+        if(date.length==7){
+
+            update=true;
+
+            title = date[3];
+            time = date[4];
+            details = date[5];
+            _id = date[6];
+
+            titleEditText.setText(title);
+            timeEditText.setText(time);
+            detailsEditText.setText(details);
+        }
+
 
         TextView dateLabel = (TextView) findViewById(R.id.dateLabel);
         dateLabel.setText(day + " " + Months[Integer.parseInt(month)] + " " + year);
@@ -109,13 +125,20 @@ public class ViewEditAppointment extends Activity {
                     errorLabel.setText("Please enter a valid " + getResources().getString(R.string.timeLabel));
                 } else {
 
+                    mySQLiteAdapter.openToWrite();
+
                     String data1 = day + "-" + month + "-" + year;
                     String data2 = titleEditText.getText().toString();
                     String data3 = timeEditText.getText().toString();
                     String data4 = detailsEditText.getText().toString();
 
-                    mySQLiteAdapter.insert(data1, data2, data3, data4);
 
+                    if(update){
+                        mySQLiteAdapter.update(_id, data1, data2, data3, data4);
+                    }else{
+                        mySQLiteAdapter.insert(data1, data2, data3, data4);
+                    }
+                    mySQLiteAdapter.close();
                     thisActivity.finish();
                 }
             }

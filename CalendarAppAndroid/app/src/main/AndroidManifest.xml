@@ -30,6 +30,10 @@
             android:name=".Search"
             android:label="Search"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Picker"
+            android:label="Select Appointment"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 

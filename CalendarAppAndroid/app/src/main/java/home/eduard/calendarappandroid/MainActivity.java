@@ -1,6 +1,8 @@
 package home.eduard.calendarappandroid;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,6 +21,11 @@ import java.util.GregorianCalendar;
 public class MainActivity extends AppCompatActivity {
 
     int yearToSet, monthToSet, dayToSet;
+    private SQLiteAdapter mySQLiteAdapter;
+    Cursor cursor;
+    Activity thisActivity = this;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +59,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
-                Log.v("new appt straight", date);
 
-                createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+                createIntent(date, "home.eduard.calendarappandroid.Picker");
             }
         });
 

@@ -63,6 +63,16 @@ public class SQLiteAdapter {
         return sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
     }
 
+    public long update(String _id, String content1, String content2, String content3, String content4) {
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_CONTENT1, content1);
+        contentValues.put(KEY_CONTENT2, content2);
+        contentValues.put(KEY_CONTENT3, content3);
+        contentValues.put(KEY_CONTENT4, content4);
+        return sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, KEY_ID + " = ?", new String[]{_id});
+    }
+
     public int deleteAll() {
         return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
     }
@@ -97,7 +107,7 @@ public class SQLiteAdapter {
     public Cursor showDate(String date) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,
-                KEY_CONTENT1 + " = ?", new String[]{date}, null, null, null);
+                KEY_CONTENT1+ " = ?", new String[]{date}, null, null, null);
 
         return cursor;
     }

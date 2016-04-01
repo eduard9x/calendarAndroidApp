@@ -8,6 +8,7 @@
     <string name="dateLabel">17 March 2017</string>
     <string name="timeHint">e.g. 15:30</string>
     <string name="hello"> Hello, Android !! </string>
+    <string name="when"><b>When: </b></string>
 
 
 </resources>

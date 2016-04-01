@@ -41,11 +41,22 @@ public class MainActivity extends AppCompatActivity {
         setTodaysDate();
 
         Button newButton = (Button) findViewById(R.id.newButton);
+        Button ViewEditButton = (Button) findViewById(R.id.viewButton);
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
         Button searchButton = (Button) findViewById(R.id.searchButton);
-
+        Button moveButton = (Button) findViewById(R.id.moveButton);
 
         final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);
+
+        ViewEditButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
+                Log.v("new appt straight", date);
+
+                createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+            }
+        });
 
         newButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,13 +68,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        moveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
+                Log.v("<<<<<<<< MOVE", date);
+
+                //createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+            }
+        });
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
-                createIntent(date, "home.eduard.calendarappandroid.AndroidSQLite");
+                createIntent(date, "home.eduard.calendarappandroid.Search");
             }
         });
 

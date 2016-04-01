@@ -94,6 +94,14 @@ public class SQLiteAdapter {
         return cursor;
     }
 
+    public Cursor showDate(String date) {
+        String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
+        Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,
+                KEY_CONTENT1 + " = ?", new String[]{date}, null, null, null);
+
+        return cursor;
+    }
+
     public class SQLiteHelper extends SQLiteOpenHelper {
 
         public SQLiteHelper(Context context, String name,

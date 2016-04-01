@@ -11,14 +11,19 @@ import android.widget.TextView;
 
 public class ViewEditAppointment extends Activity {
 
+    private SQLiteAdapter mySQLiteAdapter;
+    private String day, month, year;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_appointment);
 
+        mySQLiteAdapter = new SQLiteAdapter(this);
+        mySQLiteAdapter.openToWrite();
+
         final Activity thisActivity = this;
 
-        final String day, month, year;
         final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
 
         final EditText titleEditText = (EditText) findViewById(R.id.titleEditText);
@@ -28,7 +33,7 @@ public class ViewEditAppointment extends Activity {
 
         String intentVal = getIntent().getStringExtra("DoNext");
 
-        String[] date = intentVal.split(";;;");
+        final String[] date = intentVal.split(";;;");
 
         day = date[0];
         month = date[1];
@@ -103,7 +108,14 @@ public class ViewEditAppointment extends Activity {
                 } else if (!timeValid) {
                     errorLabel.setText("Please enter a valid " + getResources().getString(R.string.timeLabel));
                 } else {
-                    //todo add it to db
+
+                    String data1 = day + "-" + month + "-" + year;
+                    String data2 = titleEditText.getText().toString();
+                    String data3 = timeEditText.getText().toString();
+                    String data4 = detailsEditText.getText().toString();
+
+                    mySQLiteAdapter.insert(data1, data2, data3, data4);
+
                     thisActivity.finish();
                 }
             }

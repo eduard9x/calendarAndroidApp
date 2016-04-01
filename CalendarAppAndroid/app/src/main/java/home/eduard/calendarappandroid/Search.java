@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 public class Search extends Activity {
 
-    EditText inputContent1, inputContent2;
-    Button buttonAdd, buttonDeleteAll, buttonShowLess;
+    EditText searchField;
+    Button buttonSearch;
 
     private SQLiteAdapter mySQLiteAdapter;
     ListView listContent;
@@ -33,18 +33,18 @@ public class Search extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search);
 
-        inputContent1 = (EditText) findViewById(R.id.content1);
-        inputContent2 = (EditText) findViewById(R.id.content2);
-        buttonAdd = (Button) findViewById(R.id.add);
-        buttonDeleteAll = (Button) findViewById(R.id.deleteall);
-        buttonShowLess = (Button) findViewById(R.id.showLess);
+        searchField = (EditText) findViewById(R.id.searchField);
+        buttonSearch = (Button) findViewById(R.id.searchButtonDatabase);
 
-        listContent = (ListView) findViewById(R.id.contentlist);
+        listContent = (ListView) findViewById(R.id.searchList);
 
         mySQLiteAdapter = new SQLiteAdapter(this);
         mySQLiteAdapter.openToWrite();
 
         cursor = mySQLiteAdapter.queueAll();
+
+//        cursor = mySQLiteAdapter.showDate("1-3-2016");
+
         String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT1, SQLiteAdapter.KEY_CONTENT2};
         int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
         cursorAdapter =
@@ -52,51 +52,23 @@ public class Search extends Activity {
         listContent.setAdapter(cursorAdapter);
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
-        buttonAdd.setOnClickListener(buttonAddOnClickListener);
-        buttonDeleteAll.setOnClickListener(buttonDeleteAllOnClickListener);
-        buttonShowLess.setOnClickListener(buttonShowLessOnClickListener);
+        buttonSearch.setOnClickListener(buttonSearchOnClickListener);
 
     }
 
-    Button.OnClickListener buttonShowLessOnClickListener
+    Button.OnClickListener buttonSearchOnClickListener
             = new Button.OnClickListener() {
 
         @Override
         public void onClick(View arg0) {
-            cursor = mySQLiteAdapter.queueFew(145);
-            String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT1, SQLiteAdapter.KEY_CONTENT2};
-            int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
-            cursorAdapter =
-                    new SimpleCursorAdapter(thisActivity, R.layout.row, cursor, from, to, 0);
-            listContent.setAdapter(cursorAdapter);
-            updateList();
-        }
+            String data1 = searchField.getText().toString();
+//            String data1 = "1-3-2016";
+            String data2 = "1bla1";
+            String data3 = "2bla2";
+            String data4 = "3bla3";
 
-    };
-
-    Button.OnClickListener buttonAddOnClickListener
-            = new Button.OnClickListener() {
-
-        @Override
-        public void onClick(View arg0) {
-            String data1 = inputContent1.getText().toString();
-            String data2 = inputContent2.getText().toString();
-            String data3 = "1bla1";
-            String data4 = "2bla2";
-
-            mySQLiteAdapter.insert(data1, data2, data3, data4);
-            updateList();
-        }
-
-    };
-
-    Button.OnClickListener buttonDeleteAllOnClickListener
-            = new Button.OnClickListener() {
-
-        @Override
-        public void onClick(View arg0) {
-            mySQLiteAdapter.deleteAll();
-            updateList();
+            cursor = mySQLiteAdapter.showDate(data1);
+            cursorAdapter.swapCursor(cursor);
         }
 
     };

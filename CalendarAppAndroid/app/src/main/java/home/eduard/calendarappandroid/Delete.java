@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Delete extends Activity {
 
@@ -63,6 +64,8 @@ public class Delete extends Activity {
         buttonDeleteAll.setOnClickListener(buttonDeleteAllOnClickListener);
         deleteSelected.setOnClickListener(buttonDeleteSelectedOnClickListener);
 
+        updateNoAppointments();
+        closeDatabase();
     }
 
     Button.OnClickListener buttonDeleteSelectedOnClickListener
@@ -75,7 +78,7 @@ public class Delete extends Activity {
             try {
                 int number = Integer.parseInt(text);
 
-                if (number > 0 && number < listContent.getCount())
+                if (number > 0 && number <= listContent.getCount())
                     listContentOnItemClickListener.onItemClick(listContent, null, number - 1, 203);
                 else throw new Exception();
             } catch (Exception ex) {
@@ -115,9 +118,13 @@ public class Delete extends Activity {
             myDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                 // do something when the button is clicked
                 public void onClick(DialogInterface arg0, int arg1) {
-
+                    mySQLiteAdapter.openToWrite();
                     mySQLiteAdapter.deleteAll(day + "-" + month + "-" + year);
-                    updateList();
+                    closeDatabase();
+                    closeCursor();
+                    Toast.makeText(Delete.this, "All appointments have been deleted.", Toast.LENGTH_SHORT).show();
+                    updateNoAppointments();
+                    thisActivity.finish();
                 }
             });
 
@@ -129,8 +136,6 @@ public class Delete extends Activity {
             });
 
             myDialog.show();
-
-
         }
 
     };
@@ -187,8 +192,16 @@ public class Delete extends Activity {
             myDialog.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
                 // do something when the button is clicked
                 public void onClick(DialogInterface arg0, int arg1) {
+                    mySQLiteAdapter.openToWrite();
                     mySQLiteAdapter.delete_byID(item_id);
                     updateList();
+                    closeDatabase();
+                    if (listContent.getCount() == 0) {
+                        closeCursor();
+                        updateNoAppointments();
+                        thisActivity.finish();
+                        Toast.makeText(Delete.this, "All appointments have been deleted.", Toast.LENGTH_SHORT).show();
+                    }
                 }
             });
 
@@ -207,14 +220,29 @@ public class Delete extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mySQLiteAdapter.close();
     }
 
 
     private void updateList() {
-        cursor = mySQLiteAdapter.resetCursor();
+        cursor = mySQLiteAdapter.showDate(day + "-" + month + "-" + year);
         cursorAdapter.swapCursor(cursor);
     }
 
+    private void closeCursor() {
+        cursor.close();
+    }
+
+    private void closeDatabase() {
+        mySQLiteAdapter.close();
+    }
+
+    private void updateNoAppointments(){
+        TextView emptyList = (TextView) findViewById(R.id.emptyListDelete);
+        if (listContent.getCount() != 0) {
+            emptyList.setVisibility(View.INVISIBLE);
+        } else {
+            emptyList.setVisibility(View.VISIBLE);
+        }
+    }
 
 }

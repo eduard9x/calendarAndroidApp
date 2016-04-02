@@ -108,6 +108,7 @@ public class SQLiteAdapter {
         return cursor;
     }
 
+
     public Cursor showDate(String date) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,

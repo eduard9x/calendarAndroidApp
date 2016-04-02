@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
+import android.util.Log;
+
+import java.util.ArrayList;
 
 public class SQLiteAdapter {
 
@@ -17,6 +20,7 @@ public class SQLiteAdapter {
     public static final String KEY_CONTENT2 = "Title";
     public static final String KEY_CONTENT3 = "Time";
     public static final String KEY_CONTENT4 = "Details";
+    private String NEWAPPT = "NewAppointment";
 
 
     //create table MY_DATABASE (ID integer primary key, Content text not null);
@@ -107,10 +111,30 @@ public class SQLiteAdapter {
     public Cursor showDate(String date) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,
-                KEY_CONTENT1+ " = ?", new String[]{date}, null, null, null);
+                KEY_CONTENT1 + " = ?", new String[]{date}, null, null, KEY_CONTENT3 + " DESC");
 
         return cursor;
     }
+
+    public boolean allowTitle(String title, String date, String _id) {
+
+        openToRead();
+        Cursor cursor = showDate(date);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            if (title.equalsIgnoreCase(cursor.getString(cursor.getColumnIndex(KEY_CONTENT2))))
+                if (_id == NEWAPPT) return false;
+                else if (!(_id.equals(cursor.getString(cursor.getColumnIndex(KEY_ID))))) return false;
+
+            cursor.moveToNext();
+        }
+
+        close();
+
+        return true;
+    }
+
 
     public class SQLiteHelper extends SQLiteOpenHelper {
 

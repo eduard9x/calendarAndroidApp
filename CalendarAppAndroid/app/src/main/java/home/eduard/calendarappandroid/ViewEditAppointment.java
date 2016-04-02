@@ -1,6 +1,8 @@
 package home.eduard.calendarappandroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,19 +10,21 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class ViewEditAppointment extends Activity {
 
     private SQLiteAdapter mySQLiteAdapter;
     private String day, month, year, title, time, details, _id;
     private boolean update;
+    private String NEWAPPT = "NewAppointment";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_appointment);
 
-        update=false;
+        update = false;
         mySQLiteAdapter = new SQLiteAdapter(this);
 
         final Activity thisActivity = this;
@@ -34,20 +38,20 @@ public class ViewEditAppointment extends Activity {
 
         String intentVal = getIntent().getStringExtra("DoNext");
 
-        final String[] date = intentVal.split(";;;");
+        final String[] data = intentVal.split(";;;");
 
-        day = date[0];
-        month = date[1];
-        year = date[2];
+        day = data[0];
+        month = data[1];
+        year = data[2];
 
-        if(date.length==7){
+        if (data.length == 7) {
 
-            update=true;
+            update = true;
 
-            title = date[3];
-            time = date[4];
-            details = date[5];
-            _id = date[6];
+            title = data[3];
+            time = data[4];
+            details = data[5];
+            _id = data[6];
 
             titleEditText.setText(title);
             timeEditText.setText(time);
@@ -118,8 +122,31 @@ public class ViewEditAppointment extends Activity {
                     Log.v("<<< Exception time: ", ex.toString());
                 }
 
+                boolean allowTitle;
+                if (update)
+                    allowTitle = mySQLiteAdapter.allowTitle(title, day + "-" + month + "-" + year, _id);
+                else
+                    allowTitle = mySQLiteAdapter.allowTitle(title, day + "-" + month + "-" + year, NEWAPPT);
 
-                if (title.equals("")) {
+                Log.v("<<< allow Title: ", Boolean.toString(allowTitle));
+
+                if (!allowTitle) {
+//                    errorLabel.setText("This " + getResources().getString(R.string.titleLabel) + " has been used already.");
+
+                    AlertDialog.Builder myDialog
+                            = new AlertDialog.Builder(ViewEditAppointment.this);
+                    myDialog.setTitle("Appointment already exists.");
+                    myDialog.setMessage("Appointment " + title + " already exists, please choose a different event title.");
+
+                    myDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        // do something when the button is clicked
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            //doNothing
+                        }
+                    });
+
+                    myDialog.show();
+                } else if (title.equals("")) {
                     errorLabel.setText("Please enter a valid " + getResources().getString(R.string.titleLabel));
                 } else if (!timeValid) {
                     errorLabel.setText("Please enter a valid " + getResources().getString(R.string.timeLabel));
@@ -132,14 +159,17 @@ public class ViewEditAppointment extends Activity {
                     String data3 = timeEditText.getText().toString();
                     String data4 = detailsEditText.getText().toString();
 
-
-                    if(update){
+                    if (update) {
+                        Log.v("<<< UPDATE DB: ", Boolean.toString(update));
                         mySQLiteAdapter.update(_id, data1, data2, data3, data4);
-                    }else{
+                    } else {
+                        Log.v("<<< INSERT DB: ", Boolean.toString(update));
                         mySQLiteAdapter.insert(data1, data2, data3, data4);
                     }
                     mySQLiteAdapter.close();
+
                     thisActivity.finish();
+                    Toast.makeText(ViewEditAppointment.this, "Saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });

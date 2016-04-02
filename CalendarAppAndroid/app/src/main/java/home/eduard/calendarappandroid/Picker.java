@@ -54,6 +54,14 @@ public class Picker extends Activity {
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
 
+        TextView emptyList = (TextView) findViewById(R.id.emptyList);
+        if(listContent.getCount()!=0){
+            emptyList.setVisibility(View.INVISIBLE);
+        }else{
+            emptyList.setVisibility(View.VISIBLE);
+        }
+
+
     }
 
     private ListView.OnItemClickListener listContentOnItemClickListener
@@ -69,9 +77,6 @@ public class Picker extends Activity {
             final String item_content2 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT2));
             final String item_content3 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT3));
             final String item_content4 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT4));
-
-
-
 
             AlertDialog.Builder myDialog
                     = new AlertDialog.Builder(Picker.this);

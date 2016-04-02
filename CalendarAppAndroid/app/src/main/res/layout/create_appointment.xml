@@ -101,5 +101,6 @@
         android:textStyle="bold"
         android:layout_column="1"
         android:layout_row="7"
+        android:textColor="@color/red"
         android:layout_columnSpan="2"/>
 </GridLayout>

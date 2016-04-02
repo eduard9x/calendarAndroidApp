@@ -23,7 +23,7 @@
             android:label="Appointment"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".AndroidSQLite"
+            android:name=".Delete"
             android:label="SQLite"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

@@ -77,8 +77,8 @@ public class SQLiteAdapter {
         return sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, KEY_ID + " = ?", new String[]{_id});
     }
 
-    public int deleteAll() {
-        return sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
+    public int deleteAll(String date) {
+        return sqLiteDatabase.delete(MYDATABASE_TABLE, KEY_CONTENT1 + " = ?", new String[]{date});
     }
 
     public void delete_byID(int id) {

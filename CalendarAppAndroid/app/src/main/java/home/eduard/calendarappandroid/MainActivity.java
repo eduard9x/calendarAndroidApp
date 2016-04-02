@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
-                createIntent(date, "home.eduard.calendarappandroid.AndroidSQLite");
+                createIntent(date, "home.eduard.calendarappandroid.Delete");
             }
         });
 

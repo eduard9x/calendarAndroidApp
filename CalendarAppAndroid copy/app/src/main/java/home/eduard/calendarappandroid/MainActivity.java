@@ -27,8 +27,7 @@ public class MainActivity extends AppCompatActivity {
     Cursor cursor;
     Activity thisActivity = this;
 
-    private final String THESAURUS_KEY = "pBnxuiTWACxzPqMYWoxy";
-    private final String THESAURUS_URL = "http://thesaurus.altervista.org/thesaurus/v1?word=peace&language=en_US&key=pBnxuiTWACxzPqMYWoxy&output=xml";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

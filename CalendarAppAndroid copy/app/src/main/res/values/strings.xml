@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CalendarAppAndroid</string>
+    <string name="action_settings">Settings</string>
+    <string name="empty">No appointments!</string>
+    <string name="titleLabel">Title</string>
+    <string name="timeLabel">Time</string>
+    <string name="detailsLabel">Details</string>
+    <string name="dateLabel">17 March 2017</string>
+    <string name="timeHint">e.g. 15:30</string>
+    <string name="hello"> Hello, Android !! </string>
+    <string name="when"><b>When: </b></string>
+</resources>

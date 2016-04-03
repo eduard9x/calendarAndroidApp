@@ -9,8 +9,6 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class SQLiteAdapter {
@@ -104,20 +102,10 @@ public class SQLiteAdapter {
         return cursor;
     }
 
-    public Cursor getFutureAppts() {
-
-        int yearToSet,dayToSet,monthToSet;
-
-        GregorianCalendar cal = new GregorianCalendar();
-        yearToSet = cal.get(Calendar.YEAR);
-        monthToSet = cal.get(Calendar.MONTH);
-        dayToSet = cal.get(Calendar.DAY_OF_MONTH);
-
-        String date = Integer.toString(dayToSet) + Integer.toString(monthToSet) + Integer.toString(yearToSet);
-
+    public Cursor queueFew(int i) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,
-                KEY_CONTENT1 + " > ?", new String[]{date}, null, null, KEY_CONTENT1 + " , " + KEY_CONTENT3 );
+                KEY_ID + " < ?", new String[]{String.valueOf(i)}, null, null, null);
 
         return cursor;
     }
@@ -125,7 +113,7 @@ public class SQLiteAdapter {
     public Cursor showDate(String date) {
         String[] columns = new String[]{KEY_ID, KEY_CONTENT1, KEY_CONTENT2, KEY_CONTENT3, KEY_CONTENT4};
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE, columns,
-                KEY_CONTENT1 + " = ?", new String[]{date}, null, null, KEY_CONTENT3 + " ASC");
+                KEY_CONTENT2 + " = ?", new String[]{date}, null, null, KEY_CONTENT3 + " ASC");
 
         return cursor;
     }
@@ -150,28 +138,27 @@ public class SQLiteAdapter {
         return true;
     }
 
-    public List<String> searchForTitleAndDetails(String text) {
+    public List<String> searchTitle(String text) {
 
         List<String> results_array_list = new ArrayList<String>();
 
         openToRead();
-        Cursor cursor = getFutureAppts();
+        Cursor cursor = queueAll();
+        //todo need to create all future appts
 
         cursor.moveToFirst();
         while (!cursor.isAfterLast()) {
-            if (cursor.getString(cursor.getColumnIndex(KEY_CONTENT2)).toLowerCase().contains(text.toLowerCase()) || cursor.getString(cursor.getColumnIndex(KEY_CONTENT4)).toLowerCase().contains(text.toLowerCase())) {
+            if (cursor.getString(cursor.getColumnIndex(KEY_CONTENT2)).toLowerCase().contains(text.toLowerCase())){
 
                 StringBuilder builder = new StringBuilder();
 
                 String date = cursor.getString(cursor.getColumnIndex(KEY_CONTENT1));
-
+                Log.v("DATE>>>", date);
                 String[] dateToChange = date.split("-");
                 date = dateToChange[0] + "-" + Months[Integer.parseInt(dateToChange[1])] + "-" + dateToChange[2];
 
-                builder.append(date);
-                builder.append("\n# Title: " + cursor.getString(cursor.getColumnIndex(KEY_CONTENT2)));
-                builder.append("\n# When: " + cursor.getString(cursor.getColumnIndex(KEY_CONTENT3)));
-                builder.append("\n# Details: " + cursor.getString(cursor.getColumnIndex(KEY_CONTENT4)));
+                builder.append(date + " >> ");
+                builder.append(cursor.getString(cursor.getColumnIndex(KEY_CONTENT2)));
 
                 results_array_list.add(builder.toString());
             }

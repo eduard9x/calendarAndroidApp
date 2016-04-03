@@ -47,7 +47,7 @@ public class Search extends Activity {
 
         buttonSearchOnClickListener.onClick(buttonSearch);
 
-//        listContent.setOnItemClickListener(listContentOnItemClickListener);
+        listContent.setOnItemClickListener(listContentOnItemClickListener);
         buttonSearch.setOnClickListener(buttonSearchOnClickListener);
 
         mySQLiteAdapter.close();
@@ -60,12 +60,12 @@ public class Search extends Activity {
         public void onClick(View arg0) {
             String toSearch = searchField.getText().toString();
 
-            results_array_list = mySQLiteAdapter.searchForTitleAndDetails(toSearch);
+            results_array_list = mySQLiteAdapter.searchTitle(toSearch);
 
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(
                     Search.this,
-                    R.layout.search_results,
-                    R.id.results,
+                    R.layout.row,
+                    R.id.id,
                     results_array_list);
 
             listContent.setAdapter(arrayAdapter);
@@ -82,16 +82,11 @@ public class Search extends Activity {
             Log.v("RESULTS:", results_array_list.get(position));
 
             String selected = results_array_list.get(position);
-            String[] splitSelected = selected.split("\n#");
-            String date, title, time, details;
+            String[] splitSelected = selected.split(" >> ");
+            String date, title;
 
             date = splitSelected[0];
             title = splitSelected[1];
-            time = splitSelected[2];
-
-            if (splitSelected.length==4)
-                details = splitSelected[3];
-            else details = "";
 
             String[] breakDownDate = date.split("-");
             day = breakDownDate[0];
@@ -104,7 +99,10 @@ public class Search extends Activity {
 
             year = breakDownDate[2];
 
-            Log.v("RESULTS2:", day + "-" + Months[Integer.parseInt(month)] + "-" + year + " >> " + title + " >> " + time + " >> " + details);
+            Log.v("RESULTS2:", day+"-"+Months[Integer.parseInt(month)]+"-"+year + " >> " + title);
+
+
+
 
 
         }

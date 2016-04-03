@@ -3,6 +3,7 @@ package home.eduard.calendarappandroid;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.ImageButton;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -34,23 +36,13 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Snackbar.make(view, "put your own stuff", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         //save the today's date first
         setTodaysDate();
 
         Button newButton = (Button) findViewById(R.id.newButton);
         Button ViewEditButton = (Button) findViewById(R.id.viewButton);
         Button deleteButton = (Button) findViewById(R.id.deleteButton);
-        Button searchButton = (Button) findViewById(R.id.searchButton);
+        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
         Button moveButton = (Button) findViewById(R.id.moveButton);
 
         final CalendarView myCalendar = (CalendarView) findViewById(R.id.calendarView);

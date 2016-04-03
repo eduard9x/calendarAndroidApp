@@ -53,11 +53,12 @@
         android:id="@+id/moveButton"
         android:layout_below="@+id/calendarView"
         android:layout_toRightOf="@id/deleteButton"/>
-    <Button
+    <ImageButton
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
+        android:src="@drawable/search"
         android:id="@+id/searchButton"
         android:layout_below="@+id/calendarView"
         android:layout_toRightOf="@id/moveButton"/>

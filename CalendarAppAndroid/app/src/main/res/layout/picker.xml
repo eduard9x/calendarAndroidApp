@@ -4,12 +4,14 @@
     android:layout_height="fill_parent"
     android:orientation="vertical"
     android:clickable="true"
+    android:background="@color/teal"
     android:focusableInTouchMode="true">
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Please select an appointment" />
+        android:text="Please select an appointment"
+        android:background="@color/silver"/>
 
     <ListView
         android:id="@+id/searchList"

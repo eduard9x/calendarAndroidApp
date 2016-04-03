@@ -1,14 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
- ! Excerpted from "Hello, Android",
- ! published by The Pragmatic Bookshelf.
- ! Copyrights apply to this code. It may not be used to create training material, 
- ! courses, books, articles, and the like. Contact us if you are in doubt.
- ! We make no guarantees that this code is fit for any purpose. 
- ! Visit http://www.pragmaticprogrammer.com/titles/eband4 for more book information.
--->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.example.suggest">
+    package="home.eduard.calendarappandroid">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -27,6 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NewAct"
+            android:label="New Activity"></activity>
+        <activity android:name=".ViewEditAppointment"
+            android:label="View/Edit Appointment"></activity>
+        <activity android:name=".Delete"
+            android:label="Delete appointment"></activity>
+        <activity android:name=".Search"
+            android:label="Search appointment"></activity>
+        <activity android:name=".Picker"
+            android:label="Select appointment"></activity>
+        <activity android:name=".Move"
+            android:label="Move appointment"></activity>
     </application>
 
 </manifest>

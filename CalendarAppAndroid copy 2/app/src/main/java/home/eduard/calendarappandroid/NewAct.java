@@ -1,4 +1,4 @@
-package org.example.suggest;
+package home.eduard.calendarappandroid;
 
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class MainActivity extends Activity {
+public class NewAct extends Activity {
     private EditText origText;
     private Handler guiThread;
     private ExecutorService suggThread;
@@ -94,7 +94,7 @@ public class MainActivity extends Activity {
                     // Begin suggestion now but don't wait for it
                     try {
                         SuggestTask suggestTask = new SuggestTask(
-                                MainActivity.this, // reference to activity
+                                NewAct.this, // reference to activity
                                 original // original text
                         );
                         suggPending = suggThread.submit(suggestTask);
@@ -138,10 +138,10 @@ public class MainActivity extends Activity {
     }
 
     private void createDialog(List<String> list) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(NewAct.this);
         builderSingle.setTitle("Please select one of the following synonyms:");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(MainActivity.this,
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(NewAct.this,
                 android.R.layout.select_dialog_singlechoice, list);
 
         builderSingle.setNegativeButton(

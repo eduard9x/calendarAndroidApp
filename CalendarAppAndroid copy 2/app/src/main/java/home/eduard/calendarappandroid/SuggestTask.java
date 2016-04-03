@@ -1,4 +1,4 @@
-package org.example.suggest;
+package home.eduard.calendarappandroid;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -15,10 +15,10 @@ import android.util.Xml;
 
 public class SuggestTask implements Runnable {
     private static final String TAG = "SuggestTask";
-    private final MainActivity suggest;
+    private final NewAct suggest;
     private final String original;
 
-    SuggestTask(MainActivity context, String original) {
+    SuggestTask(NewAct context, String original) {
         this.suggest = context;
         this.original = original;
     }

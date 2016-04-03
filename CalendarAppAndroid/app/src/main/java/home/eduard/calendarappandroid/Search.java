@@ -3,8 +3,10 @@ package home.eduard.calendarappandroid;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
@@ -27,6 +29,9 @@ public class Search extends Activity {
     Cursor cursor;
 
     Activity thisActivity = this;
+    private String day, month, year;
+    final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,31 +87,39 @@ public class Search extends Activity {
 
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
             final int item_id = cursor.getInt(cursor.getColumnIndex(SQLiteAdapter.KEY_ID));
-            String item_content1 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT1));
-            String item_content2 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT2));
+            final String item_content1 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT1));
+            final String item_content2 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT2));
+            final String item_content3 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT3));
+            final String item_content4 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT4));
 
             AlertDialog.Builder myDialog
                     = new AlertDialog.Builder(Search.this);
 
-            myDialog.setTitle("Delete?");
+            final String[] data = item_content1.split("-");
+
+            day = data[0];
+            month = data[1];
+            year = data[2];
+
+            myDialog.setTitle(item_content2);
 
             TextView dialogTxt_id = new TextView(Search.this);
             LayoutParams dialogTxt_idLayoutParams
                     = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             dialogTxt_id.setLayoutParams(dialogTxt_idLayoutParams);
-            dialogTxt_id.setText("#" + String.valueOf(item_id));
+            dialogTxt_id.setText("When: " + day+ "-" + Months[Integer.parseInt(month)] + "-" + year);
 
             TextView dialogC1_id = new TextView(Search.this);
             LayoutParams dialogC1_idLayoutParams
                     = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             dialogC1_id.setLayoutParams(dialogC1_idLayoutParams);
-            dialogC1_id.setText(item_content1);
+            dialogC1_id.setText("Time: " + String.valueOf(item_content3));
 
             TextView dialogC2_id = new TextView(Search.this);
             LayoutParams dialogC2_idLayoutParams
                     = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             dialogC2_id.setLayoutParams(dialogC2_idLayoutParams);
-            dialogC2_id.setText(item_content2);
+            dialogC2_id.setText("Details: " + String.valueOf(item_content4));
 
             LinearLayout layout = new LinearLayout(Search.this);
             layout.setOrientation(LinearLayout.VERTICAL);
@@ -115,7 +128,7 @@ public class Search extends Activity {
             layout.addView(dialogC2_id);
             myDialog.setView(layout);
 
-            myDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            myDialog.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                 // do something when the button is clicked
                 public void onClick(DialogInterface arg0, int arg1) {
                     mySQLiteAdapter.delete_byID(item_id);
@@ -127,6 +140,18 @@ public class Search extends Activity {
                 // do something when the button is clicked
                 public void onClick(DialogInterface arg0, int arg1) {
 
+                }
+            });
+
+            myDialog.setNeutralButton("Edit", new DialogInterface.OnClickListener() {
+                // do something when the button is clicked
+                public void onClick(DialogInterface arg0, int arg1) {
+
+                    String date = day + ";;;" + month + ";;;" + year + ";;;" + item_content2 + ";;;" + item_content3 + ";;;" + item_content4 + ";;;" + item_id;
+                    Log.v("new appt straight", date);
+
+                    thisActivity.finish();
+                    createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
                 }
             });
 
@@ -147,9 +172,16 @@ public class Search extends Activity {
         cursor = mySQLiteAdapter.resetCursor();
         cursorAdapter.swapCursor(cursor);
     }
-
-
-
+    
+    void createIntent(String doNext, String className) {
+        try {
+            Intent whatToDoNext = new Intent(this, Class.forName(className));
+            whatToDoNext.putExtra("DoNext", doNext);
+            this.startActivity(whatToDoNext);
+        } catch (Exception ex) {
+            Log.v("Class error", ex.toString());
+        }
+    }
 
 
 }

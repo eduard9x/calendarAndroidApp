@@ -131,7 +131,6 @@ public class ViewEditAppointment extends Activity {
                 Log.v("<<< allow Title: ", Boolean.toString(allowTitle));
 
                 if (!allowTitle) {
-//                    errorLabel.setText("This " + getResources().getString(R.string.titleLabel) + " has been used already.");
 
                     AlertDialog.Builder myDialog
                             = new AlertDialog.Builder(ViewEditAppointment.this);

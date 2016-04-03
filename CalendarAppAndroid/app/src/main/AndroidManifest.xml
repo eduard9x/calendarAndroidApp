@@ -34,6 +34,10 @@
             android:name=".Picker"
             android:label="Select Appointment"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Move"
+            android:label="Move Appointment"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 

@@ -2,21 +2,24 @@ package home.eduard.calendarappandroid;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
+import android.widget.CalendarView;
+import android.widget.DatePicker;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class Picker extends Activity {
+public class Move extends Activity {
 
     private SQLiteAdapter mySQLiteAdapter;
     ListView listContent;
@@ -26,7 +29,8 @@ public class Picker extends Activity {
 
     Activity thisActivity = this;
     private String day, month, year;
-    final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
+    int _id;
+    String data1,data2,data3,data4;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +66,7 @@ public class Picker extends Activity {
         } else {
             emptyList.setVisibility(View.VISIBLE);
         }
+        mySQLiteAdapter.close();
 
     }
 
@@ -73,7 +78,7 @@ public class Picker extends Activity {
             return;
 
         TextView someText = (TextView) v.findViewById(R.id.id);
-        Log.v("Ggg" , someText.getText().toString());
+        Log.v("Ggg", someText.getText().toString());
 
 //        someText.setText("Hi! I updated you manually!");
     }
@@ -87,7 +92,6 @@ public class Picker extends Activity {
 
             Log.v("<<< Position", Integer.toString(position));
 
-
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
             final int item_id = cursor.getInt(cursor.getColumnIndex(SQLiteAdapter.KEY_ID));
             final String item_content1 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT1));
@@ -95,81 +99,48 @@ public class Picker extends Activity {
             final String item_content3 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT3));
             final String item_content4 = cursor.getString(cursor.getColumnIndex(SQLiteAdapter.KEY_CONTENT4));
 
-            AlertDialog.Builder myDialog
-                    = new AlertDialog.Builder(Picker.this);
+            Log.v("<<< ID", Integer.toString(item_id));
 
-            myDialog.setTitle(item_content2);
+            _id = item_id;
+            data1 = item_content1;
+            data2 = item_content2;
+            data3 = item_content3;
+            data4 = item_content4;
 
-            TextView dialogTxt_id = new TextView(Picker.this);
-            LayoutParams dialogTxt_idLayoutParams
-                    = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            dialogTxt_id.setLayoutParams(dialogTxt_idLayoutParams);
-            dialogTxt_id.setText("When: " + day+ "-" + Months[Integer.parseInt(month)] + "-" + year);
 
-            TextView dialogC1_id = new TextView(Picker.this);
-            LayoutParams dialogC1_idLayoutParams
-                    = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            dialogC1_id.setLayoutParams(dialogC1_idLayoutParams);
-            dialogC1_id.setText("Time: " + String.valueOf(item_content3));
-
-            TextView dialogC2_id = new TextView(Picker.this);
-            LayoutParams dialogC2_idLayoutParams
-                    = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-            dialogC2_id.setLayoutParams(dialogC2_idLayoutParams);
-            dialogC2_id.setText("Details: " + String.valueOf(item_content4));
-
-            LinearLayout layout = new LinearLayout(Picker.this);
-            layout.setOrientation(LinearLayout.VERTICAL);
-            layout.addView(dialogTxt_id);
-            layout.addView(dialogC1_id);
-            layout.addView(dialogC2_id);
-            myDialog.setView(layout);
-
-            myDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                // do something when the button is clicked
-                public void onClick(DialogInterface arg0, int arg1) {
-
-                }
-            });
-
-            myDialog.setPositiveButton("Edit", new DialogInterface.OnClickListener() {
-                // do something when the button is clicked
-                public void onClick(DialogInterface arg0, int arg1) {
-
-                    String date = day + ";;;" + month + ";;;" + year + ";;;" + item_content2 + ";;;" + item_content3 + ";;;" + item_content4 + ";;;" + item_id;
-                    Log.v("new appt straight", date);
-
-                    thisActivity.finish();
-                    createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
-                }
-            });
+            DatePickerDialog myDialog = new DatePickerDialog(Move.this,
+                    myDialogListener,
+                    Integer.parseInt(year),
+                    Integer.parseInt(month),
+                    Integer.parseInt(day));
 
             myDialog.show();
+        }
+    };
 
+    public DatePickerDialog.OnDateSetListener myDialogListener = new DatePickerDialog.OnDateSetListener() {
+
+        public void onDateSet(DatePicker view, int selectedYear, int selectedMonth, int selectedDay) {
+
+            data1 = selectedDay + "-" + selectedMonth + "-" + selectedYear;
+            Log.v("Date selected: ", data1);
+
+            mySQLiteAdapter.openToWrite();
+            mySQLiteAdapter.update(Integer.toString(_id), data1, data2, data3, data4);
+            updateList();
+            mySQLiteAdapter.close();
+            Toast.makeText(Move.this, "Appointment has been moved.", Toast.LENGTH_SHORT).show();
         }
     };
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mySQLiteAdapter.close();
     }
-
 
     private void updateList() {
-        cursor = mySQLiteAdapter.resetCursor();
+        cursor = mySQLiteAdapter.showDate(day + "-" + month + "-" + year);
         cursorAdapter.swapCursor(cursor);
     }
-
-    void createIntent(String doNext, String className) {
-        try {
-            Intent whatToDoNext = new Intent(this, Class.forName(className));
-            whatToDoNext.putExtra("DoNext", doNext);
-            this.startActivity(whatToDoNext);
-        } catch (Exception ex) {
-            Log.v("Class error", ex.toString());
-        }
-    }
-
 
 }

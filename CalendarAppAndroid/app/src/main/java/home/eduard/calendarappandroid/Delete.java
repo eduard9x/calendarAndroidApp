@@ -30,6 +30,7 @@ public class Delete extends Activity {
     SimpleCursorAdapter cursorAdapter;
     Cursor cursor;
 
+    final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     Activity thisActivity = this;
 
     @Override
@@ -167,7 +168,7 @@ public class Delete extends Activity {
             LayoutParams dialogTxt_idLayoutParams
                     = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
             dialogTxt_id.setLayoutParams(dialogTxt_idLayoutParams);
-            dialogTxt_id.setText("When: " + String.valueOf(item_content1));
+            dialogTxt_id.setText("When: " + day+ "-" + Months[Integer.parseInt(month)] + "-" + year);
 
             TextView dialogC1_id = new TextView(Delete.this);
             LayoutParams dialogC1_idLayoutParams

@@ -12,8 +12,8 @@ import java.util.ArrayList;
 
 public class SQLiteAdapter {
 
-    public static final String MYDATABASE_NAME = "MY_DATABASE2";
-    public static final String MYDATABASE_TABLE = "MY_TABLE2";
+    public static final String MYDATABASE_NAME = "MY_DATABASE$";
+    public static final String MYDATABASE_TABLE = "MY_TABLE$";
     public static final int MYDATABASE_VERSION = 1;
     public static final String KEY_ID = "_id";
     public static final String KEY_CONTENT1 = "Date";

@@ -78,9 +78,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
-                Log.v("<<<<<<<< MOVE", date);
 
-                //createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+                createIntent(date, "home.eduard.calendarappandroid.Move");
             }
         });
 

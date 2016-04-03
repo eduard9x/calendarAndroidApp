@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Select appointment to view" />
+        android:text="Please select an appointment" />
 
     <ListView
         android:id="@+id/searchList"

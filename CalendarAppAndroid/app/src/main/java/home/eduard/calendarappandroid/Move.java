@@ -128,6 +128,7 @@ public class Move extends Activity {
             mySQLiteAdapter.openToWrite();
             mySQLiteAdapter.update(Integer.toString(_id), data1, data2, data3, data4);
             updateList();
+            if(listContent.getCount()==0) thisActivity.finish();
             mySQLiteAdapter.close();
             Toast.makeText(Move.this, "Appointment has been moved.", Toast.LENGTH_SHORT).show();
         }

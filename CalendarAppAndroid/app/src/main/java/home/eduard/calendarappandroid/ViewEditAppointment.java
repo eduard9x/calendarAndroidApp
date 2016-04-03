@@ -158,6 +158,15 @@ public class ViewEditAppointment extends Activity {
                     String data3 = timeEditText.getText().toString();
                     String data4 = detailsEditText.getText().toString();
 
+                    String[] timeToCheck = data3.split(":");
+                    int[] timeIntegers = {Integer.parseInt(timeToCheck[0]), Integer.parseInt(timeToCheck[1])};
+
+                    for (int i = 0; i < timeToCheck.length; i++)
+                        if (timeIntegers[i] < 10)
+                            timeToCheck[i] = "0" + Integer.toString(timeIntegers[i]);
+
+                    data3 = timeToCheck[0] + ":" + timeToCheck[1];
+
                     if (update) {
                         Log.v("<<< UPDATE DB: ", Boolean.toString(update));
                         mySQLiteAdapter.update(_id, data1, data2, data3, data4);

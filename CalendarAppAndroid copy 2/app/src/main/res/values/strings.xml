@@ -12,7 +12,7 @@
     <string name="hello"> Hello, Android !! </string>
     <string name="when"><b>When: </b></string>
     <string name="original_hint">Enter partial text</string>
-    <string name="original_label">Original text:</string>
+    <string name="synonym_picker">Synonym picker</string>
     <string name="result_label">Suggestions:</string>
     <string name="working">Working...</string>
     <string name="error">(Web service error)</string>

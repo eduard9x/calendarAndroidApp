@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/original_label" />
+        android:text="@string/synonym_picker" />
 
     <EditText
         android:id="@+id/original_text"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Go"
-        android:id="@+id/go_button"/>
+        android:id="@+id/synonym_button"/>
 
     <TextView
         android:layout_width="fill_parent"

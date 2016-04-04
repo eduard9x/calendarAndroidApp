@@ -70,7 +70,7 @@ public class SuggestTask implements Runnable {
                         toAdd = toAdd.replaceAll("[\n\r\\s]", "");
                         String[] str1 = toAdd.split("[|]");
                         for (int i = 0; i < str1.length; i++)
-                            if (!str1[i].contains("antonym") && !str1[i].contains("verb") && !str1[i].contains("adj") && str1[i].length() > 0)
+                            if (!str1[i].contains("antonym") && !str1[i].contains("verb") && !str1[i].contains("adj") && !str1[i].contains("adv") && str1[i].length() > 0)
                                 messages.add(str1[i]);
                     }
                 }

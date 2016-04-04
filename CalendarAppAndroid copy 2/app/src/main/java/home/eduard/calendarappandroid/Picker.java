@@ -140,7 +140,7 @@ public class Picker extends Activity {
                     Log.v("new appt straight", date);
 
                     thisActivity.finish();
-                    createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+                    createIntent(date, "home.eduard.calendarappandroid.NewAct");
                 }
             });
 

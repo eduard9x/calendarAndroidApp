@@ -33,13 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
-        Button newButton2 = (Button) findViewById(R.id.new_button);
-        newButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createIntent();
-            }
-        });
 
 
 
@@ -72,7 +65,7 @@ public class MainActivity extends Activity {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
-                createIntent(date, "home.eduard.calendarappandroid.ViewEditAppointment");
+                createIntent(date, "home.eduard.calendarappandroid.NewAct");
             }
         });
 
@@ -122,11 +115,6 @@ public class MainActivity extends Activity {
 
 
 
-    }
-
-    public void createIntent(){
-        Intent doNext = new Intent(MainActivity.this, NewAct.class);
-        this.startActivity(doNext);
     }
 
     void createIntent(String doNext, String className) {

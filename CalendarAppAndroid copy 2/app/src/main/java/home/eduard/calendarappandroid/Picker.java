@@ -2,19 +2,24 @@ package home.eduard.calendarappandroid;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class Picker extends Activity {
 
@@ -47,13 +52,14 @@ public class Picker extends Activity {
 
         cursor = mySQLiteAdapter.showDate(day + "-" + month + "-" + year);
 
-        String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT3, SQLiteAdapter.KEY_CONTENT2};
-        int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
+        String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT3, SQLiteAdapter.KEY_CONTENT2, SQLiteAdapter.KEY_CONTENT4};
+        int[] to = new int[]{R.id.selection_number, R.id.id, R.id.text1, R.id.text2};
         cursorAdapter =
                 new SimpleCursorAdapter(thisActivity, R.layout.row, cursor, from, to, 0);
         listContent.setAdapter(cursorAdapter);
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
+
 
         TextView emptyList = (TextView) findViewById(R.id.emptyList);
         if (listContent.getCount() != 0) {
@@ -63,6 +69,21 @@ public class Picker extends Activity {
             emptyList.setVisibility(View.VISIBLE);
         }
 
+        cursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+
+            public boolean setViewValue(View aView, Cursor aCursor, int aColumnIndex) {
+                if (aColumnIndex == 0) {
+                    TextView textView = (TextView) aView;
+                    int CursorPos = aCursor.getPosition() + 1;
+                    textView.setText(Integer.toString(CursorPos));
+
+                    return true;
+                }
+
+                return false;
+            }});
+
+        mySQLiteAdapter.close();
     }
 
     private void updateView(int index) {
@@ -72,10 +93,6 @@ public class Picker extends Activity {
         if (v == null)
             return;
 
-        TextView someText = (TextView) v.findViewById(R.id.id);
-        Log.v("Ggg" , someText.getText().toString());
-
-//        someText.setText("Hi! I updated you manually!");
     }
 
     private ListView.OnItemClickListener listContentOnItemClickListener
@@ -86,7 +103,6 @@ public class Picker extends Activity {
                                 long id) {
 
             Log.v("<<< Position", Integer.toString(position));
-
 
             Cursor cursor = (Cursor) parent.getItemAtPosition(position);
             final int item_id = cursor.getInt(cursor.getColumnIndex(SQLiteAdapter.KEY_ID));
@@ -140,11 +156,9 @@ public class Picker extends Activity {
                     Log.v("new appt straight", date);
 
                     thisActivity.finish();
-                    createIntent(date, "home.eduard.calendarappandroid.NewAct");
+                    createIntent(date, "home.eduard.calendarappandroid.NewAppt");
                 }
             });
-
-            myDialog.show();
 
         }
     };
@@ -152,13 +166,6 @@ public class Picker extends Activity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mySQLiteAdapter.close();
-    }
-
-
-    private void updateList() {
-        cursor = mySQLiteAdapter.resetCursor();
-        cursorAdapter.swapCursor(cursor);
     }
 
     void createIntent(String doNext, String className) {

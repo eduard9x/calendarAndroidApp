@@ -19,10 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewAct"
-            android:label="New Activity"></activity>
-        <activity android:name=".ViewEditAppointment"
-            android:label="View/Edit Appointment"></activity>
+        <activity android:name=".NewAppt"
+            android:label="New Appointment"></activity>
         <activity android:name=".Delete"
             android:label="Delete appointment"></activity>
         <activity android:name=".Search"

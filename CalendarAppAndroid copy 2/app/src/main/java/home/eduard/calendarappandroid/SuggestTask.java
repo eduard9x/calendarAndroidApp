@@ -15,10 +15,10 @@ import android.util.Xml;
 
 public class SuggestTask implements Runnable {
     private static final String TAG = "SuggestTask";
-    private final NewAct suggest;
+    private final NewAppt suggest;
     private final String original;
 
-    SuggestTask(NewAct context, String original) {
+    SuggestTask(NewAppt context, String original) {
         this.suggest = context;
         this.original = original;
     }

@@ -2,7 +2,6 @@ package home.eduard.calendarappandroid;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,29 +14,12 @@ import java.util.GregorianCalendar;
 
 public class MainActivity extends Activity {
 
-
-
     int yearToSet, monthToSet, dayToSet;
-//    private SQLiteAdapter mySQLiteAdapter;
-    Cursor cursor;
-    Activity thisActivity = this;
-
-    private final String THESAURUS_KEY = "pBnxuiTWACxzPqMYWoxy";
-    private final String THESAURUS_URL = "http://thesaurus.altervista.org/thesaurus/v1?word=peace&language=en_US&key=pBnxuiTWACxzPqMYWoxy&output=xml";
-
-
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-
-
-
-
-
 
         //save the today's date first
         setTodaysDate();
@@ -65,7 +47,7 @@ public class MainActivity extends Activity {
                 String date = Integer.toString(dayToSet) + ";;;" + Integer.toString(monthToSet) + ";;;" + Integer.toString(yearToSet);
                 Log.v("new appt straight", date);
 
-                createIntent(date, "home.eduard.calendarappandroid.NewAct");
+                createIntent(date, "home.eduard.calendarappandroid.NewAppt");
             }
         });
 
@@ -109,11 +91,6 @@ public class MainActivity extends Activity {
             }
         });
         //endregion
-
-
-
-
-
 
     }
 

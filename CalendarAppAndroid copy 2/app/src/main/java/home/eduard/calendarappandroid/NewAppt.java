@@ -12,9 +12,6 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -23,7 +20,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NewAct extends Activity {
+public class NewAppt extends Activity {
     private EditText origText;
     private Handler guiThread;
     private ExecutorService suggThread;
@@ -125,7 +122,7 @@ public class NewAct extends Activity {
                     // Begin suggestion now but don't wait for it
                     try {
                         SuggestTask suggestTask = new SuggestTask(
-                                NewAct.this, // reference to activity
+                                NewAppt.this, // reference to activity
                                 original // original text
                         );
                         suggPending = suggThread.submit(suggestTask);
@@ -169,10 +166,10 @@ public class NewAct extends Activity {
     }
 
     private void createDialog(List<String> list) {
-        AlertDialog.Builder builderSingle = new AlertDialog.Builder(NewAct.this);
+        AlertDialog.Builder builderSingle = new AlertDialog.Builder(NewAppt.this);
         builderSingle.setTitle("Please select one of the following synonyms:");
 
-        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(NewAct.this,
+        final ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(NewAppt.this,
                 android.R.layout.select_dialog_singlechoice, list);
 
         builderSingle.setNegativeButton(
@@ -349,7 +346,7 @@ public class NewAct extends Activity {
                 if (!allowTitle) {
 
                     AlertDialog.Builder myDialog
-                            = new AlertDialog.Builder(NewAct.this);
+                            = new AlertDialog.Builder(NewAppt.this);
                     myDialog.setTitle("Appointment already exists.");
                     myDialog.setMessage("Appointment " + title + " already exists, please choose a different event title.");
 
@@ -393,7 +390,7 @@ public class NewAct extends Activity {
                     mySQLiteAdapter.close();
 
                     thisActivity.finish();
-                    Toast.makeText(NewAct.this, "Saved", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NewAppt.this, "Saved", Toast.LENGTH_SHORT).show();
                 }
             }
         });

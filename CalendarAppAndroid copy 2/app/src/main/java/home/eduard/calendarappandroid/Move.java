@@ -51,8 +51,10 @@ public class Move extends Activity {
 
         cursor = mySQLiteAdapter.showDate(day + "-" + month + "-" + year);
 
-        String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT3, SQLiteAdapter.KEY_CONTENT2};
-        int[] to = new int[]{R.id.id, R.id.text1, R.id.text2};
+        Log.d("sql", SQLiteAdapter.KEY_CONTENT3.toString());
+
+        String[] from = new String[]{SQLiteAdapter.KEY_ID, SQLiteAdapter.KEY_CONTENT3, SQLiteAdapter.KEY_CONTENT2, SQLiteAdapter.KEY_CONTENT4};
+        int[] to = new int[]{R.id.selection_number, R.id.id, R.id.text1, R.id.text2};
         cursorAdapter =
                 new SimpleCursorAdapter(thisActivity, R.layout.row, cursor, from, to, 0);
         listContent.setAdapter(cursorAdapter);
@@ -68,6 +70,20 @@ public class Move extends Activity {
         }
         mySQLiteAdapter.close();
 
+        cursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+
+            public boolean setViewValue(View aView, Cursor aCursor, int aColumnIndex) {
+                if (aColumnIndex == 0) {
+                    TextView textView = (TextView) aView;
+                    int CursorPos = aCursor.getPosition() + 1;
+                    textView.setText(Integer.toString(CursorPos));
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
     }
 
     private void updateView(int index) {

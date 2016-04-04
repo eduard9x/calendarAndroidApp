@@ -1,17 +1,12 @@
 package home.eduard.calendarappandroid;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import java.util.List;
 
@@ -23,14 +18,7 @@ public class Search extends Activity {
     private SQLiteAdapter mySQLiteAdapter;
     ListView listContent;
 
-    SimpleCursorAdapter cursorAdapter;
-    Cursor cursor;
     List<String> results_array_list;
-
-    Activity thisActivity = this;
-    private String day, month, year;
-    final String[] Months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,7 +35,6 @@ public class Search extends Activity {
 
         buttonSearchOnClickListener.onClick(buttonSearch);
 
-//        listContent.setOnItemClickListener(listContentOnItemClickListener);
         buttonSearch.setOnClickListener(buttonSearchOnClickListener);
 
         mySQLiteAdapter.close();
@@ -72,64 +59,9 @@ public class Search extends Activity {
         }
     };
 
-    private ListView.OnItemClickListener listContentOnItemClickListener
-            = new ListView.OnItemClickListener() {
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
-
-            Log.v("RESULTS:", results_array_list.get(position));
-
-            String selected = results_array_list.get(position);
-            String[] splitSelected = selected.split("\n#");
-            String date, title, time, details;
-
-            date = splitSelected[0];
-            title = splitSelected[1];
-            time = splitSelected[2];
-
-            if (splitSelected.length==4)
-                details = splitSelected[3];
-            else details = "";
-
-            String[] breakDownDate = date.split("-");
-            day = breakDownDate[0];
-
-            for (int i = 0; i < Months.length; i++)
-                if (Months[i].equals(breakDownDate[1])) {
-                    month = Integer.toString(i);
-                    break;
-                }
-
-            year = breakDownDate[2];
-
-            Log.v("RESULTS2:", day + "-" + Months[Integer.parseInt(month)] + "-" + year + " >> " + title + " >> " + time + " >> " + details);
-
-
-        }
-    };
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
     }
-
-
-    private void updateList() {
-        cursor = mySQLiteAdapter.resetCursor();
-        cursorAdapter.swapCursor(cursor);
-    }
-
-    void createIntent(String doNext, String className) {
-        try {
-            Intent whatToDoNext = new Intent(this, Class.forName(className));
-            whatToDoNext.putExtra("DoNext", doNext);
-            this.startActivity(whatToDoNext);
-        } catch (Exception ex) {
-            Log.v("Class error", ex.toString());
-        }
-    }
-
 
 }

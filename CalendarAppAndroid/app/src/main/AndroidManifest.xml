@@ -2,43 +2,33 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="home.eduard.calendarappandroid">
 
-    <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
+    <application
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:label="@string/app_name"
+            android:name=".MainActivity" >
+            <intent-filter >
+                <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ViewEditAppointment"
-            android:label="Appointment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Delete"
-            android:label="SQLite"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Search"
-            android:label="Search"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Picker"
-            android:label="Select Appointment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
-            android:name=".Move"
-            android:label="Move Appointment"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".NewAppt"
+            android:label="New Appointment"></activity>
+        <activity android:name=".Delete"
+            android:label="Delete appointment"></activity>
+        <activity android:name=".Search"
+            android:label="Search appointment"></activity>
+        <activity android:name=".Picker"
+            android:label="Select appointment"></activity>
+        <activity android:name=".Move"
+            android:label="Move appointment"></activity>
     </application>
-
 
 </manifest>

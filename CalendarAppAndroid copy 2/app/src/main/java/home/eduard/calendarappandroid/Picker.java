@@ -2,24 +2,18 @@ package home.eduard.calendarappandroid;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
-
-import org.w3c.dom.Text;
 
 public class Picker extends Activity {
 
@@ -60,7 +54,6 @@ public class Picker extends Activity {
 
         listContent.setOnItemClickListener(listContentOnItemClickListener);
 
-
         TextView emptyList = (TextView) findViewById(R.id.emptyList);
         if (listContent.getCount() != 0) {
             emptyList.setVisibility(View.INVISIBLE);
@@ -76,10 +69,8 @@ public class Picker extends Activity {
                     TextView textView = (TextView) aView;
                     int CursorPos = aCursor.getPosition() + 1;
                     textView.setText(Integer.toString(CursorPos));
-
                     return true;
                 }
-
                 return false;
             }});
 
@@ -92,7 +83,6 @@ public class Picker extends Activity {
 
         if (v == null)
             return;
-
     }
 
     private ListView.OnItemClickListener listContentOnItemClickListener
@@ -159,7 +149,7 @@ public class Picker extends Activity {
                     createIntent(date, "home.eduard.calendarappandroid.NewAppt");
                 }
             });
-
+            myDialog.show();
         }
     };
 
@@ -177,6 +167,4 @@ public class Picker extends Activity {
             Log.v("Class error", ex.toString());
         }
     }
-
-
 }

@@ -1,19 +1,13 @@
 package home.eduard.calendarappandroid;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
-import android.widget.CalendarView;
 import android.widget.DatePicker;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -92,11 +86,6 @@ public class Move extends Activity {
 
         if (v == null)
             return;
-
-        TextView someText = (TextView) v.findViewById(R.id.id);
-        Log.v("Ggg", someText.getText().toString());
-
-//        someText.setText("Hi! I updated you manually!");
     }
 
     private ListView.OnItemClickListener listContentOnItemClickListener
